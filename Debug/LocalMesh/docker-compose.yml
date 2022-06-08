@@ -1,0 +1,72 @@
+version: '3'
+services:
+# Databases
+  user-db:
+    image: registry.redhat.io/rhel8/postgresql-12
+    container_name: user-container
+    ports:
+      - 9001:5432/tcp
+    environment:
+      POSTGRESQL_DATABASE: db
+      POSTGRESQL_PASSWORD: password
+      POSTGRESQL_USER: user
+  item-db:
+    image: registry.redhat.io/rhel8/postgresql-12
+    container_name: item-container
+    ports:
+      - 9002:5432/tcp
+    environment:
+      POSTGRESQL_DATABASE: db
+      POSTGRESQL_PASSWORD: password
+      POSTGRESQL_USER: user
+  purchase-db:
+    image: registry.redhat.io/rhel8/postgresql-12
+    container_name: purchase-container
+    ports:
+      - 9003:5432/tcp
+    environment:
+      POSTGRESQL_DATABASE: db
+      POSTGRESQL_PASSWORD: password
+      POSTGRESQL_USER: user
+  inventory-db:
+    image: registry.redhat.io/rhel8/postgresql-12
+    container_name: inventory-container
+    ports:
+      - 9004:5432/tcp
+    environment:
+      POSTGRESQL_DATABASE: db
+      POSTGRESQL_PASSWORD: password
+      POSTGRESQL_USER: user
+# Services
+  user-service:
+    image: user-service
+    container_name: user-service-container
+    depends_on:
+      - user-db
+    ports:
+      - 8081:8081
+    restart: on-failure
+  item-service:
+    image: item-service
+    container_name: item-service-container
+    depends_on:
+      - item-db
+    ports:
+      - 8082:8082
+    restart: on-failure
+  purchase-service:
+    image: purchase-service
+    container_name: purchase-service-container
+    depends_on:
+      - purchase-db
+    ports:
+      - 8083:8083
+    restart: on-failure
+  inventory-service:
+    image: inventory-service
+    container_name: inventory-service-container
+    depends_on:
+      - inventory-db
+    ports:
+      - 8084:8084
+    restart: on-failure
