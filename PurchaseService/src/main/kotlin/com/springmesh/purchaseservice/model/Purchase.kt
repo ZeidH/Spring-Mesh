@@ -1,4 +1,4 @@
-package com.springmesh.userservice.model
+package com.springmesh.purchaseservice.model
 
 import javax.persistence.*
 

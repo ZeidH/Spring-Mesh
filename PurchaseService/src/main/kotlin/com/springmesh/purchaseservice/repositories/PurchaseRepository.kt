@@ -1,6 +1,6 @@
-package com.springmesh.userservice.repositories
+package com.springmesh.purchaseservice.repositories
 
-import com.springmesh.userservice.model.Purchase
+import com.springmesh.purchaseservice.model.Purchase
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
