@@ -18,6 +18,25 @@
         <kotlin.version>1.6.21</kotlin.version>
         <postgres.version>42.3.3</postgres.version>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.profiles.active>local</spring.profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>cloud</id>
+            <properties>
+                <spring.profiles.active>cloud</spring.profiles.active>
+            </properties>
+        </profile>
+    </profiles>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
