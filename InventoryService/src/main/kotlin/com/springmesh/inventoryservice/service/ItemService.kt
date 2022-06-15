@@ -1,16 +1,16 @@
-package com.springmesh.userservice
+package com.springmesh.inventoryservice.service
 
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.context.annotation.Bean
 import org.springframework.web.reactive.function.client.WebClient
 
 
-class Clients(
+class ItemService(
     @Value("\${debug}")
-    private val debug: String
+    private val debug: String,
 ) {
-    @Bean
-    fun InventoryService(): WebClient? {
+    private val client: WebClient = this.ItemService()
+
+    fun ItemService(): WebClient {
         return if(this.debug.toBoolean()){
             WebClient.create("http://localhost:8084/api/")
         } else{
