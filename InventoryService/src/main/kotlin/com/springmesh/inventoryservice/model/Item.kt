@@ -4,7 +4,7 @@ import javax.persistence.*
 
 
 @Entity
-@Table(name = "USERS")
+@Table(name = "ITEMS")
 data class Item(
     @field:Id
     @GeneratedValue(strategy = GenerationType.AUTO)
