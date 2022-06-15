@@ -11,8 +11,4 @@ data class Purchase(
     var id: Int? = null,
     val user: Int,
     val item: Int
-) {
-    constructor(user:Int,item:Int) : this(null,user,item) {
-
-    }
-}
+)
