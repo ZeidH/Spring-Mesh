@@ -8,9 +8,6 @@ import javax.persistence.*
 data class Inventory(
     @Id
     var id: Int? = null,
+    var userId: Int,
     val item: Int,
-) {
-    constructor(item:Int) : this(null,item) {
-
-    }
-}
+)
