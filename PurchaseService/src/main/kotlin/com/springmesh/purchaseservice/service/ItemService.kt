@@ -1,12 +1,12 @@
-package com.springmesh.inventoryservice.service
+package com.springmesh.purchaseservice.service
 
-import com.springmesh.inventoryservice.InventoryServiceApplication
-import com.springmesh.inventoryservice.model.Item
+import com.springmesh.purchaseservice.model.Item
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
+import reactor.core.publisher.Mono
 
 @Service
 class ItemService(
@@ -14,7 +14,7 @@ class ItemService(
     private val debug: String,
 ) {
     private val client: WebClient = this.ItemService()
-    var logger: Logger = LoggerFactory.getLogger(InventoryServiceApplication::class.java)
+    var logger: Logger = LoggerFactory.getLogger(ItemService::class.java)
 
     private fun ItemService(): WebClient {
         logger.info("Initializing connection with Item Service")
@@ -26,12 +26,18 @@ class ItemService(
     }
 
     fun getItem(id:Int): Item {
-        logger.info("Getting item with id: $id")
+        logger.info("Fetching item with id: $id")
         return this.client.get()
             .uri("/items/$id")
             .retrieve()
             .bodyToMono(Item::class.java).block()!!
     }
-
+    fun getItemAsync(id:Int): Mono<Item> {
+        logger.info("Fetching item with id: $id")
+        return this.client.get()
+            .uri("/items/$id")
+            .retrieve()
+            .bodyToMono(Item::class.java)
+    }
 }
 

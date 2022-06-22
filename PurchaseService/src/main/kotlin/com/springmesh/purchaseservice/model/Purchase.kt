@@ -9,6 +9,6 @@ data class Purchase(
     @field:Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Int? = null,
-    val user: Int,
-    val item: Int
+    val userId: Int,
+    val itemId: Int
 )
