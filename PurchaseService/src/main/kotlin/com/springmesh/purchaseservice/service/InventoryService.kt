@@ -19,8 +19,6 @@ class InventoryService(
     var logger: Logger = LoggerFactory.getLogger(InventoryService::class.java)
 
     private fun InventoryService(): WebClient {
-        logger.info("Initializing connection with Inventory Service")
-
         return if(this.debug.toBoolean()){
             WebClient.create("http://localhost:8084/api/")
         } else{

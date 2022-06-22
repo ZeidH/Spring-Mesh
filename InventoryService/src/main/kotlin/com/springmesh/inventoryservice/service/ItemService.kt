@@ -1,6 +1,5 @@
 package com.springmesh.inventoryservice.service
 
-import com.springmesh.inventoryservice.InventoryServiceApplication
 import com.springmesh.inventoryservice.model.Item
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -14,10 +13,9 @@ class ItemService(
     private val debug: String,
 ) {
     private val client: WebClient = this.ItemService()
-    var logger: Logger = LoggerFactory.getLogger(InventoryServiceApplication::class.java)
+    var logger: Logger = LoggerFactory.getLogger(ItemService::class.java)
 
     private fun ItemService(): WebClient {
-        logger.info("Initializing connection with Item Service")
         return if(this.debug.toBoolean()){
             WebClient.create("http://localhost:8082/api/")
         } else{

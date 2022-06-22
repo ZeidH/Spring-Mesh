@@ -17,7 +17,6 @@ class ItemService(
     var logger: Logger = LoggerFactory.getLogger(ItemService::class.java)
 
     private fun ItemService(): WebClient {
-        logger.info("Initializing connection with Item Service")
         return if(this.debug.toBoolean()){
             WebClient.create("http://localhost:8082/api/")
         } else{
