@@ -1,0 +1,72 @@
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: inventory-service
+    labels:
+      app: inventory-service
+      app.kubernetes.io/component: inventory-service
+      app.kubernetes.io/instance: inventory-service
+      app.kubernetes.io/part-of: Utility
+      app.openshift.io/runtime: spring
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: inventory-service
+    template:
+      metadata:
+        labels:
+          app: inventory-service
+          deploymentconfig: inventory-service
+      spec:
+        priorityClassName: development-priority
+        containers:
+        - name: inventory-service
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /actuator/health
+              port: 9080
+              scheme: HTTP
+            initialDelaySeconds: 1
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          startupProbe:
+            failureThreshold: 30
+            httpGet:
+              path: /actuator/health
+              port: 9080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            requests:
+              memory: 200M
+              cpu: 100m
+            limits:
+              memory: 1Gi
+              cpu: 600m
+          image: ofocp.azurecr.io/navigator/mesh/inventory-service:main
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+            - containerPort: 9080
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: inventory-service-app-properties
+          env:
+            - name: spring.datasource.username
+              valueFrom:
+                secretKeyRef:
+                  key: database-user
+                  name: database-secrets
+            - name: spring.datasource.password
+              valueFrom:
+                secretKeyRef:
+                  key: database-password
+                  name: database-secrets

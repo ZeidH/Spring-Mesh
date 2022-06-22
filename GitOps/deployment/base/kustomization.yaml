@@ -1,0 +1,5 @@
+bases:
+  - InventoryService
+  - InventoryService/database
+resources:
+  - Secret.yaml

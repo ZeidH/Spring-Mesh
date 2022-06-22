@@ -1,0 +1,22 @@
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: inventory-service
+    labels:
+      app: inventory-service
+      app.kubernetes.io/component: inventory-service
+      app.kubernetes.io/instance: inventory-service
+      app.kubernetes.io/part-of: Utility
+      app.openshift.io/runtime-version: latest
+  spec:
+    selector:
+      app: inventory-service
+    ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+    - name: 9080-tcp
+      protocol: TCP
+      port: 9080
+      targetPort: 9080
