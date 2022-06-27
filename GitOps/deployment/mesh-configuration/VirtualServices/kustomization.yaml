@@ -1,0 +1,5 @@
+resources:
+  - item-service.yaml
+  - inventory-service.yaml
+  - purchase-service.yaml
+  - user-service.yaml

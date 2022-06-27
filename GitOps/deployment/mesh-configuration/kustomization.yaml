@@ -1,0 +1,6 @@
+bases:
+  - DestinationRules
+  - VirtualServices
+
+resources:
+  - gateway.yaml

@@ -1,0 +1,5 @@
+resources:
+  - item-service-destination.yaml
+  - inventory-service-destination.yaml
+  - user-service-destination.yaml
+  - purchase-service-destination.yaml
