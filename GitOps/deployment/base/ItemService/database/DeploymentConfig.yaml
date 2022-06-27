@@ -1,0 +1,86 @@
+  apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    name: item-database
+    annotations:
+      template.alpha.openshift.io/wait-for-ready: "true"
+    labels:
+      app: item-database
+      app.kubernetes.io/part-of: Databases
+      app.kubernetes.io/component: item-database
+      app.kubernetes.io/instance: item-database
+      app.openshift.io/runtime: postgres
+  spec:
+    replicas: 1
+    strategy:
+      type: Recreate
+    selector:
+      name: item-database
+    template:
+      metadata:
+        labels:
+          ocp: postgres
+          name: item-database
+      spec:
+        priorityClassName: development-priority
+        volumes:
+          - name: postgresql-data
+            emptyDir: {}
+        containers:
+        - name: postgresql
+          volumeMounts:
+          - name: postgresql-data
+            mountPath: /var/lib/pgsql/data
+          ports:
+          - containerPort: 5432
+            protocol: TCP
+          image: 'image-registry.openshift-image-registry.svc:5000/openshift/postgresql@sha256:a83fdf1ed51cd1c6ce493947d1fd8018903ef4078ac1d649c80b943f8e4dee59'
+          imagePullPolicy: IfNotPresent
+          readinessProbe:
+            exec:
+              command:
+                - /usr/libexec/check-container
+            initialDelaySeconds: 5
+            timeoutSeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          livenessProbe:
+            exec:
+              command:
+                - /usr/libexec/check-container
+                - '--live'
+            initialDelaySeconds: 180
+            timeoutSeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          resources:
+            requests:
+              memory: 70M
+              cpu: 20m
+            limits:
+              memory: 512Mi
+          securityContext:
+            capabilities: {}
+            privileged: false
+          terminationMessagePath: /dev/termination-log
+          env:
+            - name: POSTGRESQL_USER
+              valueFrom:
+                secretKeyRef:
+                  key: database-user
+                  name: database-secrets
+            - name: POSTGRESQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: database-password
+                  name: database-secrets
+            - name: POSTGRESQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  key: database-name
+                  name: database-secrets
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+

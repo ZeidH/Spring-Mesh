@@ -1,16 +1,16 @@
   apiVersion: v1
   kind: Service
   metadata:
-    name: inventory-service
+    name: purchase-service
     labels:
-      app: inventory-service
-      app.kubernetes.io/component: inventory-service
-      app.kubernetes.io/instance: inventory-service
+      app: purchase-service
+      app.kubernetes.io/component: purchase-service
+      app.kubernetes.io/instance: purchase-service
       app.kubernetes.io/part-of: Services
       app.openshift.io/runtime-version: latest
   spec:
     selector:
-      app: inventory-service
+      app: purchase-service
     ports:
     - name: 8080-tcp
       protocol: TCP

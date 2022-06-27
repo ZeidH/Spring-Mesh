@@ -1,32 +1,32 @@
   apiVersion: apps/v1
   kind: Deployment
   metadata:
-    name: inventory-service
+    name: user-service
     labels:
-      app: inventory-service
+      app: user-service
       version: v1
-      app.kubernetes.io/component: inventory-service
-      app.kubernetes.io/instance: inventory-service
+      app.kubernetes.io/component: user-service
+      app.kubernetes.io/instance: user-service
       app.kubernetes.io/part-of: Services
       app.openshift.io/runtime: spring
   spec:
     replicas: 1
     selector:
       matchLabels:
-        app: inventory-service
+        app: user-service
         version: v1
     template:
       metadata:
         annotations:
           sidecar.istio.io/inject: 'true'
         labels:
-          app: inventory-service
+          app: user-service
           version: v1
-          deploymentconfig: inventory-service
+          deploymentconfig: user-service
       spec:
         priorityClassName: development-priority
         containers:
-        - name: inventory-service
+        - name: user-service
           readinessProbe:
             failureThreshold: 3
             httpGet:
@@ -54,7 +54,7 @@
             limits:
               memory: 1Gi
               cpu: 600m
-          image: ofocp.azurecr.io/navigator/mesh/inventory-service:main
+          image: ofocp.azurecr.io/navigator/mesh/user-service:main
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -63,7 +63,7 @@
               protocol: TCP
           envFrom:
             - configMapRef:
-                name: inventory-service-app-properties
+                name: user-service-app-properties
           env:
             - name: spring.datasource.username
               valueFrom:

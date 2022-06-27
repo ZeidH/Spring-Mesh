@@ -1,5 +1,11 @@
 bases:
   - InventoryService
   - InventoryService/database
+  - ItemService
+  - ItemService/database
+  - PurchaseService
+  - PurchaseService/database
+  - UserService
+  - UserService/database
 resources:
   - Secret.yaml

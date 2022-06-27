@@ -1,0 +1,12 @@
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    labels:
+      app: user-service
+    name: user-service-app-properties
+  data:
+    server.port: "8080"
+    server.servlet.context-path: /api
+    spring.output.ansi.enabled: NEVER
+    management.server.port: "9080"
+    management.context-path: /actuator
