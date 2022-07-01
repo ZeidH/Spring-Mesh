@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface InventoryRepository :  CrudRepository<Inventory,Int> {
-    fun findAllByUserId(userId: Int):List<Inventory>
+    fun findByItemId(itemId: Int):Inventory
 }

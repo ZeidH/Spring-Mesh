@@ -1,6 +1,6 @@
 package com.springmesh.purchaseservice.controller
 
-import com.springmesh.purchaseservice.service.InventoryService
+import com.springmesh.purchaseservice.model.Purchase
 import com.springmesh.purchaseservice.service.PurchaseService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -19,5 +19,11 @@ class PurchaseController(
     fun purchaseItem(@PathVariable("userId") userId: Int, @PathVariable("itemId") itemId: Int){
         logger.info("Purchase request of item: $itemId for user $userId")
         this.purchaseService.purchaseItem(userId,itemId)
+    }
+
+    @GetMapping("{userId}")
+    fun purchaseItem(@PathVariable("userId") userId: Int): List<Purchase>{
+        logger.info("Getting purchases of user: $userId")
+        return this.purchaseService.getPurchasesOfUser(userId)
     }
 }

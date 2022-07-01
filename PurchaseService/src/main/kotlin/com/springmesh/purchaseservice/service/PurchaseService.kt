@@ -22,11 +22,15 @@ class PurchaseService(
 
     fun purchaseItem(userId: Int, itemId: Int){
         logger.info("Purchasing item with id: $itemId")
-        this.itemService.getItemAsync(itemId).subscribe {
-            logger.info("Updating Inventory: $itemId")
-            this.inventoryService.updateInventory(userId,it)
-        }
+
+        logger.info("Updating Inventory: $itemId")
+        this.inventoryService.updateInventory(this.itemService.getItem(itemId))
         logger.info("Transaction has been logged!: $itemId")
         this.purchaseRepository.save(Purchase(null,userId,itemId))
+    }
+
+    fun getPurchasesOfUser(userId: Int): List<Purchase> {
+        logger.info("Getting all purchases of $userId")
+        return this.purchaseRepository.findAllByUserId(userId)
     }
 }

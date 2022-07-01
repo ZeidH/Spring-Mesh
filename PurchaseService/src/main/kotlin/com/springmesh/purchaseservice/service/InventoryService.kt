@@ -6,7 +6,9 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
+import org.springframework.web.reactive.function.client.ClientResponse
 import org.springframework.web.reactive.function.client.WebClient
+import org.springframework.web.reactive.function.client.bodyToMono
 import reactor.core.publisher.Mono
 
 
@@ -27,13 +29,13 @@ class InventoryService(
     }
 
 
-    fun updateInventory(userId:Int, item: Item){
-        logger.info("Updating inventory for user: $userId with item ${item.id}")
+    fun updateInventory(item: Item) {
+        logger.info("Updating inventory for item ${item.id}")
 
         this.client.post()
-            .uri("/inventory/$userId")
-            .bodyValue(item)
+            .uri("/inventory/${item.id}")
             .retrieve()
-            .bodyToMono(String::class.java);
+            .onStatus({t: HttpStatus -> t.is4xxClientError}, { Mono.error(Throwable("This item is out of inventory"))})
+            .bodyToMono<String>().block()
     }
 }

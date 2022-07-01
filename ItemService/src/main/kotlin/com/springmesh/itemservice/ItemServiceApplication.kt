@@ -27,7 +27,8 @@ class ItemServiceApplication(
         } else {
             logger.warn("Application running in cloud mode")
         }
-
+        if(repository.findAll().count() > 0)
+            return ApplicationRunner {}
         val data = arrayOf(
             arrayOf("Potato"),
             arrayOf("Carrot"),

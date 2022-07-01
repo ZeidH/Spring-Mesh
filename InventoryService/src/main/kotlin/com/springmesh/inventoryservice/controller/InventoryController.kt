@@ -21,13 +21,13 @@ class InventoryController(
         return ResponseEntity(inventoryService.getAllInventories(), HttpStatus.OK)
     }
 
-    @GetMapping("/{userId}")
-    fun getInventoryOfUser(@PathVariable("userId") userId: Int): ResponseEntity<List<Inventory>> {
-        return ResponseEntity(inventoryService.getInventory(userId), HttpStatus.OK)
+    @GetMapping("/{itemId}")
+    fun getInventoryOfItem(@PathVariable("itemId") itemId: Int): ResponseEntity<Inventory> {
+        return ResponseEntity(inventoryService.getInventory(itemId), HttpStatus.OK)
     }
 
-    @PostMapping("/{userId}")
-    fun postInventory(@PathVariable("userId") userId: Int, @RequestBody item: Item){
-        this.inventoryService.addToInventory(userId,item)
+    @PostMapping("/{itemId}")
+    fun postInventory(@PathVariable("itemId") itemId: Int){
+        this.inventoryService.updateInventory(itemId)
     }
 }

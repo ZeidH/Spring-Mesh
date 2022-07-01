@@ -15,9 +15,9 @@ class InventoryService(
 ) {
     var logger: Logger = LoggerFactory.getLogger(InventoryService::class.java)
 
-    fun getInventory(userId: Int): List<Inventory> {
-        logger.info("Getting inventory for user: $userId")
-        return inventoryRepository.findAllByUserId(userId) // todo implement exception handling
+    fun getInventory(itemId: Int): Inventory {
+        logger.info("Getting inventory for item: $itemId")
+        return inventoryRepository.findByItemId(itemId)
     }
 
     fun getAllInventories(): List<Inventory> {
@@ -25,8 +25,10 @@ class InventoryService(
         return inventoryRepository.findAll() as List<Inventory>
     }
 
-    fun addToInventory(userId: Int, item: Item) {
-        logger.info("Adding item ${item.id} to inventory for user: $userId")
-        inventoryRepository.save(Inventory(null,userId, item.id!!))
+    fun updateInventory(itemId: Int) {
+        logger.info("Reducing amount of item: ${itemId} in inventory")
+        val inventory =  inventoryRepository.findByItemId(itemId)
+        val newInventory = inventory.inventory -1
+        inventoryRepository.save(Inventory(inventory.id, inventory.itemId, newInventory))
     }
 }

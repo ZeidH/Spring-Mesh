@@ -6,8 +6,9 @@ import javax.persistence.*
 @Entity
 @Table(name = "INVENTORY")
 data class Inventory(
-    @Id
+    @field:Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Int? = null,
-    var userId: Int,
-    val item: Int,
+    val itemId: Int,
+    var inventory: Int,
 )

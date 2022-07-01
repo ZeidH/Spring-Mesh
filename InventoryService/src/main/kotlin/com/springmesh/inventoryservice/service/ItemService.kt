@@ -1,9 +1,11 @@
 package com.springmesh.inventoryservice.service
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.springmesh.inventoryservice.model.Item
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.core.ParameterizedTypeReference
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.client.WebClient
 
@@ -30,6 +32,12 @@ class ItemService(
             .retrieve()
             .bodyToMono(Item::class.java).block()!!
     }
-
+    fun getAllItems(): List<Item> {
+        logger.info("Getting all items")
+        return this.client.get()
+            .uri("/items")
+            .retrieve()
+            .bodyToMono(Array<Item>::class.java).block()!!.toList()
+    }
 }
 
