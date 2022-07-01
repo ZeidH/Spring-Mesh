@@ -25,6 +25,7 @@
           deploymentconfig: item-service
       spec:
         priorityClassName: development-priority
+        serviceAccountName: mesh-item-service
         containers:
         - name: item-service
           readinessProbe:

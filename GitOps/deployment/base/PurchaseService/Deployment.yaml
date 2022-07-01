@@ -24,6 +24,7 @@
           version: v1
           deploymentconfig: purchase-service
       spec:
+        serviceAccountName: mesh-purchase-service
         priorityClassName: development-priority
         containers:
         - name: purchase-service

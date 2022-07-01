@@ -2,3 +2,4 @@ resources:
   - Deployment.yaml
   - Service.yaml
   - ConfigMap.yaml
+  - ServiceAccount.yaml

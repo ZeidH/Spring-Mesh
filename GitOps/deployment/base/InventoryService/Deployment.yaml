@@ -25,6 +25,7 @@
           deploymentconfig: inventory-service
       spec:
         priorityClassName: development-priority
+        serviceAccountName: mesh-inventory-service
         containers:
         - name: inventory-service
           readinessProbe:
